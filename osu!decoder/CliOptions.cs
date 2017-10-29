@@ -42,7 +42,7 @@ namespace osu_decoder_dnlib
 		public string GetHelp()
 		{
 			HelpText helpText = new HelpText();
-			helpText.Heading = new HeadingInfo("osu!decoder", "v1.2");
+			helpText.Heading = new HeadingInfo("osu!decoder", "v1.3");
 			helpText.Copyright = new CopyrightInfo("HoLLy/JustM3", 2017);
 			helpText.AdditionalNewLineAfterOption = false;
 			helpText.AddDashesToOption = true;
