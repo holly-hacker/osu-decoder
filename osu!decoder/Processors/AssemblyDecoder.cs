@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using dnlib.DotNet;
+using EazDecodeLib;
 
 namespace osu_decoder_dnlib.Processors
 {

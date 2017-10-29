@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osu!decoder", "osu!decoder\osu!decoder.csproj", "{7CDE3892-D6ED-4784-AC5C-560649D75F9A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EazDecodeLib", "eazdecode\EazDecodeLib\EazDecodeLib.csproj", "{E4F62A91-08C4-451B-B8FD-6A5D951C7F7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{7CDE3892-D6ED-4784-AC5C-560649D75F9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CDE3892-D6ED-4784-AC5C-560649D75F9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CDE3892-D6ED-4784-AC5C-560649D75F9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4F62A91-08C4-451B-B8FD-6A5D951C7F7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4F62A91-08C4-451B-B8FD-6A5D951C7F7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4F62A91-08C4-451B-B8FD-6A5D951C7F7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4F62A91-08C4-451B-B8FD-6A5D951C7F7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {92FAA7E8-8C12-4E46-8CB3-DBE933213731}
 	EndGlobalSection
 EndGlobal
