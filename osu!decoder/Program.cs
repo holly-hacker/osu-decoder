@@ -31,7 +31,7 @@ namespace osu_decoder_dnlib
 			string.IsNullOrWhiteSpace(Program.Options.Input);
 			string input = Program.Options.Input;
 			Console.WriteLine("Loading assembly...");
-			ModuleDefMD moduleDefMD = ModuleDefMD.Load(input, null);
+			ModuleDefMD moduleDefMD = ModuleDefMD.Load(input);
 			Console.WriteLine("Loaded assembly.");
 			Program.Verbose("Total amount of types in root: " + moduleDefMD.Types.Count);
 			if (Program.Options.ExperimentPatch)
@@ -44,11 +44,6 @@ namespace osu_decoder_dnlib
 			Console.WriteLine("Decrypting...");
 			AssemblyDecoder.Process(moduleDefMD);
 			Console.WriteLine("Finished decrypting.");
-			if (Program.Options.ExperimentSecondPass)
-			{
-				Console.WriteLine("Doing second pass to find bad methods");
-				AssemblyChecker.Process(moduleDefMD);
-			}
 			string text = (!string.IsNullOrEmpty(Program.Options.Output)) ? Program.Options.Output : (input.Substring(0, input.LastIndexOf('.')) + "-decrypted" + input.Substring(input.LastIndexOf('.')));
 			if (Program.Options.Sourcemap)
 			{

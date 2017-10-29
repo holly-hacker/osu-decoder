@@ -59,12 +59,6 @@ namespace osu_decoder_dnlib
 		[Option("exp-eagerdecode", HelpText = "EXPERIMENTAL: decode from reference in method bodies", DefaultValue = false)]
 		public bool ExperimentEagerDecoding { get; set; }
 
-		// Token: 0x1700000A RID: 10
-		// (get) Token: 0x0600001D RID: 29 RVA: 0x00002430 File Offset: 0x00000630
-		// (set) Token: 0x0600001E RID: 30 RVA: 0x00002438 File Offset: 0x00000638
-		[Option("exp-secondpass", HelpText = "EXPERIMENTAL: do a second pass to check if everything is decoded", DefaultValue = false)]
-		public bool ExperimentSecondPass { get; set; }
-
 		// Token: 0x1700000B RID: 11
 		// (get) Token: 0x0600001F RID: 31 RVA: 0x00002444 File Offset: 0x00000644
 		// (set) Token: 0x06000020 RID: 32 RVA: 0x0000244C File Offset: 0x0000064C

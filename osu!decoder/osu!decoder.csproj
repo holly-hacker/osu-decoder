@@ -48,7 +48,6 @@
     <Compile Include="BinaryPatch.cs" />
     <Compile Include="CliOptions.cs" />
     <Compile Include="CryptoHelper.cs" />
-    <Compile Include="Processors\AssemblyChecker.cs" />
     <Compile Include="Processors\AssemblyDecoder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
