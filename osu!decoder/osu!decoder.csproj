@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7CDE3892-D6ED-4784-AC5C-560649D75F9A}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>osu!decoder</RootNamespace>
+    <RootNamespace>osu_decoder_dnlib</RootNamespace>
     <AssemblyName>osu!decoder</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
