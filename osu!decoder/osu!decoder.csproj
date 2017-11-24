@@ -55,6 +55,7 @@
     <Compile Include="BinaryPatch.cs" />
     <Compile Include="CliOptions.cs" />
     <Compile Include="Processors\AssemblyDecoder.cs" />
+    <Compile Include="Processors\ReferenceUpdater.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SourceMap.cs" />

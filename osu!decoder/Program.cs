@@ -27,29 +27,31 @@ namespace osu_decoder_dnlib
 
             Console.WriteLine("Loading assembly...");
 			ModuleDefMD moduleDefMD = ModuleDefMD.Load(input);
-			Console.WriteLine("Loaded assembly.");
 
 			Verbose("Total amount of types in root: " + moduleDefMD.Types.Count);
 
 			if (Options.ExperimentPatch)
 			{
-				Console.WriteLine("Patching Authenticode/WinVerifyTrust");
+				Console.WriteLine("Patching Authenticode/WinVerifyTrust...");
 				BinaryPatch.PatchSignatureCheck(moduleDefMD);
-				Console.WriteLine("Patching executable name check");
+
+				Console.WriteLine("Patching executable name check...");
 				BinaryPatch.PatchExecutableName(moduleDefMD);
 			}
 
 			Console.WriteLine("Decrypting...");
 			AssemblyDecoder.Process(moduleDefMD);
-			Console.WriteLine("Finished decrypting.");
 
-			string fileOut = string.IsNullOrEmpty(Options.Output)
+		    Console.WriteLine("Updating references...");
+		    ReferenceUpdater.Process(moduleDefMD);
+            
+
+            string fileOut = string.IsNullOrEmpty(Options.Output)
                 ? input.Substring(0, input.LastIndexOf('.')) + "-decrypted" + input.Substring(input.LastIndexOf('.')) 
                 : Options.Output;
 
 			if (Options.Sourcemap)
 			{
-				AssemblyDecoder.SrcMap.Entries.Sort((entry, entry1) => string.CompareOrdinal(entry.DecodedName, entry1.DecodedName));
 				string srcmap = $"{fileOut}.srcmap";
 				Console.WriteLine("Writing sourcemap to " + srcmap);
 				AssemblyDecoder.SrcMap.Write(srcmap);

@@ -29,14 +29,8 @@ namespace osu_decoder_dnlib
         
 		public string Password { get; } = "recorderinthesandybridge";
         
-		[Option("exp-eagerdecode", HelpText = "EXPERIMENTAL: decode from reference in method bodies", DefaultValue = false)]
-		public bool ExperimentEagerDecoding { get; set; }
-        
 		[Option("exp-patch", HelpText = "Apply patch to remove signature and filename check", DefaultValue = false)]
 		public bool ExperimentPatch { get; set; }
-        
-		[Option("exp-full", HelpText = "Decode everything, resulting in unrunnable executable", DefaultValue = false)]
-		public bool ExperimentFullDecrypt { get; set; }
 
 		[HelpOption]
 		public string GetHelp()
