@@ -31,6 +31,7 @@ namespace osu_decoder_dnlib.Processors
 
         private static void UpdateSingle(MethodDef method)
         {
+            //Update the Overrides for interface implementations
             foreach (MethodOverride methodOverride in method.Overrides) {
                 var baseMethod = methodOverride.MethodDeclaration;
 
@@ -39,12 +40,13 @@ namespace osu_decoder_dnlib.Processors
                 }
             }
             
+            //Update calls to methods in method bodies
             if (!method.HasBody) return;
             foreach (Instruction i in method.Body.Instructions) {
-                if (i.Operand != null && i.Operand is IFullName f) {
-                    if (RegexObfuscated.IsMatch(f.Name)) {
-                        f.Name = AssemblyDecoder.SrcMap.Entries[f.Name];
-                    }
+                if (i.Operand == null || !(i.Operand is IFullName f)) continue;
+
+                if (RegexObfuscated.IsMatch(f.Name)) {
+                    f.Name = AssemblyDecoder.SrcMap.Entries[f.Name];
                 }
             }
         }

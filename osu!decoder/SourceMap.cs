@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace osu_decoder_dnlib
@@ -8,7 +7,6 @@ namespace osu_decoder_dnlib
 	internal class SourceMap
 	{
         public Dictionary<string, string> Entries = new Dictionary<string, string>();
-		//public List<Entry> Entries = new List<Entry>();
 
 		public void Add(string orig, string dec)
 		{

@@ -14,11 +14,6 @@ namespace osu_decoder_dnlib
 			if (!Parser.Default.ParseArguments(args, Options) || string.IsNullOrWhiteSpace(Options.Input))
 			{
 				Console.WriteLine(Options.GetHelp());
-				if (args.Length == 0)
-				{
-					Console.Write("Press any key to exit...");
-					Console.ReadKey(true);
-				}
 				return;
 			}
 			Verbose("Verbose output enabled.");
@@ -79,12 +74,6 @@ namespace osu_decoder_dnlib
 		{
 		    if (Options.Debug)
 		        Console.WriteLine("[D] " + input);
-		}
-
-		private static void UpdateProgress(string action, int cur, int max)
-		{
-			int length = max.ToString().Length;
-			Console.Write($"\r{action} [{cur.ToString().PadLeft(length)}/{max.ToString().PadLeft(length)}]");
 		}
 	}
 }

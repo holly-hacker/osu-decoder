@@ -27,31 +27,30 @@ namespace osu_decoder_dnlib.Processors
 		{
 			foreach (IFullName fullName in members) {
 			    switch (fullName) {
-			        case TypeDef typeDef:
-			            DecodeSingle(typeDef);
+			        case TypeDef t:
+			            DecodeSingle(t);
 
-			            foreach (GenericParam param in typeDef.GenericParameters)
-			                DecodeSingle(param);
+			            foreach (GenericParam generic in t.GenericParameters)
+			                DecodeSingle(generic);
 
-			            DecodeRecursive(typeDef.Events);
-			            DecodeRecursive(typeDef.Fields);
-			            DecodeRecursive(typeDef.Methods);
-			            DecodeRecursive(typeDef.NestedTypes);
-			            DecodeRecursive(typeDef.Properties);
+			            DecodeRecursive(t.Events);
+			            DecodeRecursive(t.Fields);
+			            DecodeRecursive(t.Methods);
+			            DecodeRecursive(t.NestedTypes);
+			            DecodeRecursive(t.Properties);
 
-			            foreach (InterfaceImpl impl in typeDef.Interfaces)
+			            foreach (InterfaceImpl impl in t.Interfaces)
 			                DecodeSingle(impl.Interface);
 			            break;
-			        case MethodDef methodDef:
-			             DecodeSingle(fullName);
-			            foreach (GenericParam param2 in methodDef.GenericParameters)
-			                DecodeSingle(param2);
-			            foreach (Parameter param3 in methodDef.Parameters)
-			                DecodeSingle(param3);
+			        case MethodDef m:
+			             DecodeSingle(m);
+
+			            foreach (GenericParam generic in m.GenericParameters)
+			                DecodeSingle(generic);
+			            foreach (Parameter param in m.Parameters)
+			                DecodeSingle(param);
 			            break;
 			        case FieldDef _:
-			            DecodeSingle(fullName);
-			            break;
 			        case PropertyDef _:
 			        case EventDef _:
 			            DecodeSingle(fullName);
@@ -69,17 +68,15 @@ namespace osu_decoder_dnlib.Processors
 		    if (!RegexObfuscated.IsMatch(param.Name)) return;
 
 		    string text = _crypto.Decrypt(param.Name);
-		    SrcMap?.Add(param.Name, text);
-			if (param is TypeDef typeDef && text.Contains('.'))
-			{
+		    SrcMap.Add(param.Name, text);
+			if (param is TypeDef typeDef && text.Contains('.')) {
 				typeDef.Namespace = text.Substring(0, text.LastIndexOf('.'));
 				typeDef.Name = text.Substring(text.LastIndexOf('.') + 1);
 			}
-            else if (param is TypeSpec spec) {
-                DecodeSingle(spec.ScopeType);
-            }
-            else
-			    param.Name = text;
+            else if (param is TypeSpec spec)
+		        DecodeSingle(spec.ScopeType);
+		    else
+		        param.Name = text;
 		}
 
 		private static void DecodeSingle(IVariable param)
@@ -87,7 +84,7 @@ namespace osu_decoder_dnlib.Processors
 		    if (!RegexObfuscated.IsMatch(param.Name)) return;
 
 		    string text = _crypto.Decrypt(param.Name);
-		    SrcMap?.Add(param.Name, text);
+		    SrcMap.Add(param.Name, text);
 		    param.Name = text;
 		}
 	}

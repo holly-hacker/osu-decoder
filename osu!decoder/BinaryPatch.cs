@@ -10,7 +10,7 @@ namespace osu_decoder_dnlib
 	{
 		public static void PatchSignatureCheck(ModuleDefMD module)
 		{
-			bool flag = false;
+			bool found = false;
             foreach(TypeDef typeDef in module.Types.Where(a => a.Methods.Any(b => b.IsPinvokeImpl && b.ImplMap.Name == "WinVerifyTrust")))
 			{
 				foreach (MethodDef methodDef in typeDef.Methods.Where(a => a.ReturnType.TypeName == "Boolean"))
@@ -18,10 +18,10 @@ namespace osu_decoder_dnlib
 					Program.Verbose("Writing ret true to " + methodDef.FullName);
 					methodDef.Body.Instructions.Insert(0, new Instruction(OpCodes.Ldc_I4_1));
 					methodDef.Body.Instructions.Insert(1, new Instruction(OpCodes.Ret));
-					flag = true;
+					found = true;
 				}
 			}
-		    if (!flag)
+		    if (!found)
 		        Console.WriteLine("WARNING: did not write any changes.");
 		}
 
@@ -29,11 +29,12 @@ namespace osu_decoder_dnlib
 		{
 			try
 			{
-				var methodDef = (MethodDef)module.EntryPoint.Body.Instructions[0].Operand;
+				var realMain = (MethodDef)module.EntryPoint.Body.Instructions[0].Operand;
 
-				Program.Verbose("Patching name check in " + methodDef.FullName);
-				IList<Instruction> instructions = methodDef.Body.Instructions;
+				Program.Verbose("Patching name check in " + realMain.FullName);
+				IList<Instruction> instructions = realMain.Body.Instructions;
 
+                //Patch out all method name check instructions
 				int index = instructions.IndexOf(instructions.Last(a => a.OpCode == OpCodes.Brfalse_S));
 				for (int i = -4; i < 10; i++)
 				{
@@ -44,23 +45,6 @@ namespace osu_decoder_dnlib
 			{
 				Console.WriteLine("Could not patch: " + ex.Message);
 			}
-		}
-
-		public static MethodDef FindEazStringMethod(ModuleDefMD module)
-		{
-			var methodDef = (MethodDef)module.EntryPoint.Body.Instructions[0].Operand;
-			IList<Instruction> instructions = methodDef.Body.Instructions;
-
-			for (int i = 0; i < methodDef.Body.Instructions.Count; i++)
-			{
-				Instruction instruction = instructions[i];
-				if (instruction.OpCode == OpCodes.Newobj 
-                    && instruction.Operand is MemberRef memberRef 
-                    && memberRef.Class.Name == "Exception") {
-					return (MethodDef)instructions[i - 1].Operand;
-				}
-			}
-			return null;
 		}
 	}
 }

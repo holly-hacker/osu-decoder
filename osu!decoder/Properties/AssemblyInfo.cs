@@ -15,7 +15,13 @@ using System.Runtime.Versioning;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyTitle("osu!decoder")]
+#if DEBUG
+[assembly: Debuggable(DebuggableAttribute.DebuggingModes.IgnoreSymbolStoreSequencePoints 
+                    | DebuggableAttribute.DebuggingModes.DisableOptimizations 
+                    | DebuggableAttribute.DebuggingModes.EnableEditAndContinue)]
+#else
 [assembly: Debuggable(DebuggableAttribute.DebuggingModes.IgnoreSymbolStoreSequencePoints)]
+#endif
 [assembly: RuntimeCompatibility(WrapNonExceptionThrows = true)]
 [assembly: CompilationRelaxations(8)]
 [assembly: AssemblyFileVersion("1.0.0.0")]

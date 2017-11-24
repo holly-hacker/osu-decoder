@@ -9,9 +9,6 @@ namespace osu_decoder_dnlib
 		[ValueOption(0)]
 		public string Input { get; set; }
         
-		[ValueOption(1)]
-		public string Input2 { get; set; }
-        
 		[Option('o', "output", HelpText = "Path of the output file")]
 		public string Output { get; set; }
         
