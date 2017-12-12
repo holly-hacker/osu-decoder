@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using dnlib.DotNet;
 using EazDecodeLib;
+using static osu_decoder_dnlib.Constants;
 
 namespace osu_decoder_dnlib.Processors
 {
@@ -11,7 +11,6 @@ namespace osu_decoder_dnlib.Processors
 	{
 		public static SourceMap SrcMap;
 
-		private static readonly Regex RegexObfuscated = new Regex("^#=[a-zA-Z0-9_$]+={0,2}$", RegexOptions.Compiled);
 		private static CryptoHelper _crypto;
 
 		public static void Process(ModuleDefMD ass)

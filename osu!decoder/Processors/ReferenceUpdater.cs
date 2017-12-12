@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using dnlib.DotNet;
 using dnlib.DotNet.Emit;
+using static osu_decoder_dnlib.Constants;
 
 namespace osu_decoder_dnlib.Processors
 {
     internal class ReferenceUpdater
     {
-        private static readonly Regex RegexObfuscated = new Regex("^#=[a-zA-Z0-9_$]+={0,2}$", RegexOptions.Compiled);
-
         public static void Process(ModuleDefMD ass) => UpdateRecursive(ass.Types);
 
         private static void UpdateRecursive(IEnumerable<ITypeOrMethodDef> members)

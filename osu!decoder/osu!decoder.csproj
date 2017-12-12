@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="BinaryPatch.cs" />
     <Compile Include="CliOptions.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Processors\AssemblyDecoder.cs" />
     <Compile Include="Processors\ReferenceUpdater.cs" />
     <Compile Include="Program.cs" />
