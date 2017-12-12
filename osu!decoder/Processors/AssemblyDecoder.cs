@@ -13,9 +13,9 @@ namespace osu_decoder_dnlib.Processors
 
 		private static CryptoHelper _crypto;
 
-		public static void Process(ModuleDefMD ass)
+		public static void Process(ModuleDefMD ass, CryptoHelper crypto)
 		{
-		    _crypto = new CryptoHelper(Program.Options.Password);
+		    _crypto = crypto;
 
 		    SrcMap = new SourceMap();
 

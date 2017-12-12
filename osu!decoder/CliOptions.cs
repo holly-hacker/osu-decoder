@@ -23,8 +23,11 @@ namespace osu_decoder_dnlib
         
 		[Option('r', "dry-run", HelpText = "Do not write decoded executable to disk.")]
 		public bool DryRun { get; set; }
-        
-		public string Password { get; } = "recorderinthesandybridge";
+
+        [Option('n', "no-types", HelpText = "Don't decrypt types, but strings")]
+        public bool NoTypes { get; set; }
+
+        public string Password { get; } = "recorderinthesandybridge";
         
 		[Option("exp-patch", HelpText = "Apply patch to remove signature and filename check", DefaultValue = false)]
 		public bool ExperimentPatch { get; set; }

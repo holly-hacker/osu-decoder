@@ -1,6 +1,7 @@
 ﻿using System;
 using CommandLine;
 using dnlib.DotNet;
+using EazDecodeLib;
 using osu_decoder_dnlib.Processors;
 
 namespace osu_decoder_dnlib
@@ -20,6 +21,9 @@ namespace osu_decoder_dnlib
 
 		    string input = Options.Input;
 
+		    Console.WriteLine("Loading crypto...");
+		    var crypto = new CryptoHelper(Program.Options.Password);
+
             Console.WriteLine("Loading assembly...");
 			ModuleDefMD moduleDefMD = ModuleDefMD.Load(input);
 
@@ -34,12 +38,21 @@ namespace osu_decoder_dnlib
 				BinaryPatch.PatchExecutableName(moduleDefMD);
 			}
 
-			Console.WriteLine("Decrypting...");
-			AssemblyDecoder.Process(moduleDefMD);
+		    if (!Options.NoTypes)
+		    {
+		        Console.WriteLine("Decrypting...");
+		        AssemblyDecoder.Process(moduleDefMD, crypto);
 
-		    Console.WriteLine("Updating references...");
-		    ReferenceUpdater.Process(moduleDefMD);
-            
+		        Console.WriteLine("Updating references...");
+		        ReferenceUpdater.Process(moduleDefMD);
+		    }
+		    else
+		    {
+		        Console.WriteLine("Decrypting strings...");
+		        AssemblyStringDecoder.Process(moduleDefMD, crypto);
+
+            }
+
 
             string fileOut = string.IsNullOrEmpty(Options.Output)
                 ? input.Substring(0, input.LastIndexOf('.')) + "-decrypted" + input.Substring(input.LastIndexOf('.')) 
