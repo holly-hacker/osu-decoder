@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using CommandLine;
 using dnlib.DotNet;
 using EazDecodeLib;
@@ -62,7 +63,10 @@ namespace osu_decoder_dnlib
 			{
 				string srcmap = $"{fileOut}.srcmap";
 				Console.WriteLine("Writing sourcemap to " + srcmap);
-				AssemblyDecoder.SrcMap.Write(srcmap);
+
+			    using (StreamWriter sw = new StreamWriter(srcmap))
+			        foreach (var entry in AssemblyDecoder.SrcMap)
+			            sw.WriteLine($"{entry.Key}:{entry.Value}");
 			}
 
 			if (!Options.DryRun)

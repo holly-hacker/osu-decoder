@@ -34,7 +34,7 @@ namespace osu_decoder_dnlib.Processors
                 var baseMethod = methodOverride.MethodDeclaration;
 
                 if (RegexObfuscated.IsMatch(baseMethod.Name)) {
-                    baseMethod.Name = AssemblyDecoder.SrcMap.Entries[baseMethod.Name];
+                    baseMethod.Name = AssemblyDecoder.SrcMap[baseMethod.Name];
                 }
             }
             
@@ -44,7 +44,7 @@ namespace osu_decoder_dnlib.Processors
                 if (i.Operand == null || !(i.Operand is IFullName f)) continue;
 
                 if (RegexObfuscated.IsMatch(f.Name)) {
-                    f.Name = AssemblyDecoder.SrcMap.Entries[f.Name];
+                    f.Name = AssemblyDecoder.SrcMap[f.Name];
                 }
             }
         }

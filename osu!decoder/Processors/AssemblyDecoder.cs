@@ -9,15 +9,15 @@ namespace osu_decoder_dnlib.Processors
 {
 	internal class AssemblyDecoder
 	{
-		public static SourceMap SrcMap;
+	    public static Dictionary<string, string> SrcMap;
 
-		private static CryptoHelper _crypto;
+        private static CryptoHelper _crypto;
 
 		public static void Process(ModuleDefMD ass, CryptoHelper crypto)
 		{
 		    _crypto = crypto;
 
-		    SrcMap = new SourceMap();
+            SrcMap = new Dictionary<string, string>();
 
 		    DecodeRecursive(ass.Types);
 		}
@@ -67,7 +67,7 @@ namespace osu_decoder_dnlib.Processors
 		    if (!RegexObfuscated.IsMatch(param.Name)) return;
 
 		    string text = _crypto.Decrypt(param.Name);
-		    SrcMap.Add(param.Name, text);
+		    SrcMap[param.Name] = text;
 			if (param is TypeDef typeDef && text.Contains('.')) {
 				typeDef.Namespace = text.Substring(0, text.LastIndexOf('.'));
 				typeDef.Name = text.Substring(text.LastIndexOf('.') + 1);
@@ -83,8 +83,8 @@ namespace osu_decoder_dnlib.Processors
 		    if (!RegexObfuscated.IsMatch(param.Name)) return;
 
 		    string text = _crypto.Decrypt(param.Name);
-		    SrcMap.Add(param.Name, text);
-		    param.Name = text;
+		    SrcMap[param.Name] = text;
+            param.Name = text;
 		}
 	}
 }
