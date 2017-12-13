@@ -7,18 +7,21 @@ using static osu_decoder_dnlib.Constants;
 
 namespace osu_decoder_dnlib.Processors
 {
-    internal static class AssemblyStringDecoder
+    internal class AssemblyStringDecoder : IProcessor
     {
-        private static CryptoHelper _crypto;
-
-        public static void Process(ModuleDefMD ass, CryptoHelper crypto)
+        private readonly CryptoHelper _crypto;
+        
+        public AssemblyStringDecoder(CryptoHelper crypto)
         {
             _crypto = crypto;
-
-            UpdateRecursive(ass.Types);
         }
 
-        private static void UpdateRecursive(IEnumerable<ITypeOrMethodDef> members)
+        public void Process(ModuleDef def)
+        {
+            UpdateRecursive(def.Types);
+        }
+
+        private void UpdateRecursive(IEnumerable<ITypeOrMethodDef> members)
         {
             foreach (ITypeOrMethodDef def in members)
             {
@@ -35,7 +38,7 @@ namespace osu_decoder_dnlib.Processors
             }
         }
 
-        private static void UpdateSingle(MethodDef method)
+        private void UpdateSingle(MethodDef method)
         {
             //Update calls to methods in method bodies
             if (!method.HasBody) return;

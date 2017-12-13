@@ -57,6 +57,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Processors\AssemblyDecoder.cs" />
     <Compile Include="Processors\AssemblyStringDecoder.cs" />
+    <Compile Include="Processors\IProcessor.cs" />
     <Compile Include="Processors\ReferenceUpdater.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

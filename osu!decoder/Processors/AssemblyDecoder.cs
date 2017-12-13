@@ -7,22 +7,25 @@ using static osu_decoder_dnlib.Constants;
 
 namespace osu_decoder_dnlib.Processors
 {
-	internal class AssemblyDecoder
+	internal class AssemblyDecoder : IProcessor
 	{
-	    public static Dictionary<string, string> SrcMap;
+	    public Dictionary<string, string> SrcMap;
 
-        private static CryptoHelper _crypto;
+        private readonly CryptoHelper _crypto;
 
-		public static void Process(ModuleDefMD ass, CryptoHelper crypto)
-		{
+	    public AssemblyDecoder(CryptoHelper crypto)
+	    {
 		    _crypto = crypto;
+	    }
 
+		public void Process(ModuleDef def)
+		{
             SrcMap = new Dictionary<string, string>();
 
-		    DecodeRecursive(ass.Types);
+		    DecodeRecursive(def.Types);
 		}
 
-		private static void DecodeRecursive(IEnumerable<IFullName> members)
+		private void DecodeRecursive(IEnumerable<IFullName> members)
 		{
 			foreach (IFullName fullName in members) {
 			    switch (fullName) {
@@ -62,7 +65,7 @@ namespace osu_decoder_dnlib.Processors
 			}
 		}
 
-		private static void DecodeSingle(IFullName param)
+		private void DecodeSingle(IFullName param)
 		{
 		    if (!RegexObfuscated.IsMatch(param.Name)) return;
 
@@ -78,7 +81,7 @@ namespace osu_decoder_dnlib.Processors
 		        param.Name = text;
 		}
 
-		private static void DecodeSingle(IVariable param)
+		private void DecodeSingle(IVariable param)
 		{
 		    if (!RegexObfuscated.IsMatch(param.Name)) return;
 

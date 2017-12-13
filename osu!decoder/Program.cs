@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using CommandLine;
 using dnlib.DotNet;
@@ -30,6 +31,7 @@ namespace osu_decoder_dnlib
 
 			Verbose("Total amount of types in root: " + moduleDefMD.Types.Count);
 
+		    Dictionary<string, string> sourceMap = null;
 			if (Options.ExperimentPatch)
 			{
 				Console.WriteLine("Patching Authenticode/WinVerifyTrust...");
@@ -42,15 +44,16 @@ namespace osu_decoder_dnlib
 		    if (!Options.NoTypes)
 		    {
 		        Console.WriteLine("Decrypting...");
-		        AssemblyDecoder.Process(moduleDefMD, crypto);
-
-		        Console.WriteLine("Updating references...");
-		        ReferenceUpdater.Process(moduleDefMD);
+		        var ass = new AssemblyDecoder(crypto);
+                ass.Process(moduleDefMD);
+		        
+                Console.WriteLine("Updating references...");
+		        new ReferenceUpdater(sourceMap = ass.SrcMap).Process(moduleDefMD);
 		    }
 		    else
 		    {
 		        Console.WriteLine("Decrypting strings...");
-		        AssemblyStringDecoder.Process(moduleDefMD, crypto);
+		        new AssemblyStringDecoder(crypto).Process(moduleDefMD);
 
             }
 
@@ -59,13 +62,13 @@ namespace osu_decoder_dnlib
                 ? input.Substring(0, input.LastIndexOf('.')) + "-decrypted" + input.Substring(input.LastIndexOf('.')) 
                 : Options.Output;
 
-			if (Options.Sourcemap)
+			if (Options.Sourcemap && sourceMap != null)
 			{
 				string srcmap = $"{fileOut}.srcmap";
 				Console.WriteLine("Writing sourcemap to " + srcmap);
 
 			    using (StreamWriter sw = new StreamWriter(srcmap))
-			        foreach (var entry in AssemblyDecoder.SrcMap)
+			        foreach (var entry in sourceMap)
 			            sw.WriteLine($"{entry.Key}:{entry.Value}");
 			}
 

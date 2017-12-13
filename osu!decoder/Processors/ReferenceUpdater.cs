@@ -6,11 +6,18 @@ using static osu_decoder_dnlib.Constants;
 
 namespace osu_decoder_dnlib.Processors
 {
-    internal class ReferenceUpdater
+    internal class ReferenceUpdater : IProcessor
     {
-        public static void Process(ModuleDefMD ass) => UpdateRecursive(ass.Types);
+        private readonly Dictionary<string, string> _srcMap;
 
-        private static void UpdateRecursive(IEnumerable<ITypeOrMethodDef> members)
+        public ReferenceUpdater(Dictionary<string, string> srcMap)
+        {
+            _srcMap = srcMap;
+        }
+
+        public void Process(ModuleDef def) => UpdateRecursive(def.Types);
+
+        private void UpdateRecursive(IEnumerable<ITypeOrMethodDef> members)
         {
             foreach (ITypeOrMethodDef def in members)
             {
@@ -27,14 +34,14 @@ namespace osu_decoder_dnlib.Processors
             }
         }
 
-        private static void UpdateSingle(MethodDef method)
+        private void UpdateSingle(MethodDef method)
         {
             //Update the Overrides for interface implementations
             foreach (MethodOverride methodOverride in method.Overrides) {
                 var baseMethod = methodOverride.MethodDeclaration;
 
                 if (RegexObfuscated.IsMatch(baseMethod.Name)) {
-                    baseMethod.Name = AssemblyDecoder.SrcMap[baseMethod.Name];
+                    baseMethod.Name = _srcMap[baseMethod.Name];
                 }
             }
             
@@ -44,7 +51,7 @@ namespace osu_decoder_dnlib.Processors
                 if (i.Operand == null || !(i.Operand is IFullName f)) continue;
 
                 if (RegexObfuscated.IsMatch(f.Name)) {
-                    f.Name = AssemblyDecoder.SrcMap[f.Name];
+                    f.Name = _srcMap[f.Name];
                 }
             }
         }
