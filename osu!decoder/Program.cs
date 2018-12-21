@@ -58,8 +58,11 @@ namespace osu_decoder_dnlib
             }
 
 
+		    int periodIdx = input.LastIndexOf('.');
+		    if (periodIdx == -1)
+			    periodIdx = input.Length;
             string fileOut = string.IsNullOrEmpty(Options.Output)
-                ? input.Substring(0, input.LastIndexOf('.')) + "-decrypted" + input.Substring(input.LastIndexOf('.')) 
+                ? input.Substring(0, periodIdx) + "-decrypted" + input.Substring(periodIdx)
                 : Options.Output;
 
 			if (Options.Sourcemap && sourceMap != null)
