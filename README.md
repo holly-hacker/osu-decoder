@@ -7,7 +7,7 @@ This is a private tool I used to decrypt osu!'s symbol names, allowing me to vie
 If you are reading this and your name happens to be "Dean Herbert", 'sup. I was probably the first person to figure this out, but not the last. Multiple people have been using this to create publicly available cheats. It was about time you fixed this.
 
 ## Usage
-It has a help menu, you can figure it out.
+It has a help menu, you can figure it out. You probably want to run your input through [EazFixer](https://github.com/HoLLy-HaCKeR/EazFixer) first.
 
 ## FAQ
 
