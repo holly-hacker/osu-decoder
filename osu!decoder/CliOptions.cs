@@ -27,7 +27,8 @@ namespace osu_decoder_dnlib
         [Option('n', "no-types", HelpText = "Don't decrypt types, but strings")]
         public bool NoTypes { get; set; }
 
-        public string Password { get; } = "recorderinthesandybridge";
+        [Option('p', "password", HelpText = "Specify a custom password")]
+        public string Password { get; set; } = "recorderinthesandybridge";
         
 		[Option("exp-patch", HelpText = "Apply patch to remove signature and filename check", DefaultValue = false)]
 		public bool ExperimentPatch { get; set; }
