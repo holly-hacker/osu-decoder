@@ -30,7 +30,7 @@ namespace osu_decoder_dnlib
         [Option('p', "password", HelpText = "Specify a custom password")]
         public string Password { get; set; } = "recorderinthesandybridge";
         
-		[Option("exp-patch", HelpText = "Apply patch to remove signature and filename check", DefaultValue = false)]
+		[Option("exp-patch", HelpText = "Apply patch to remove signature and filename check", DefaultValue = true)]
 		public bool ExperimentPatch { get; set; }
 
 		[HelpOption]
